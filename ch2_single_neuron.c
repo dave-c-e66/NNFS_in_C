@@ -94,9 +94,7 @@ void free_matrix_mem(struct matrix *m) {
     free(m->array);
 }
 
-void copy_matrix(struct matrix *m, float *original){
 
-}
 
 int main(){
     float inputs[] = {1.0, 2.0, 3.0, 2.5};
@@ -150,7 +148,8 @@ int main(){
         input_m.array[i] = (float *)malloc(input_m.columns * sizeof(float));
     }*/
     allocate_matrix_mem(&input_m, I_ROWS, I_COLS);
-
+ 
+    
     for (int i = 0; i < input_m.rows; i++) {
         for (int j = 0; j < input_m.columns; j++) {
             input_m.array[i][j] = m_inputs[i][j];
@@ -213,7 +212,12 @@ int main(){
         }
     }
     
+
+
     
+
+
+
     //matrix_p(product_m2, input_m2, weight_m2);
     //printf("The product array is:\n");
     //print_matrix(product_m2);
