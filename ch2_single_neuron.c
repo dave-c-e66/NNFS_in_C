@@ -100,6 +100,15 @@ void initialize_weights(struct matrix *weights, int rows, int columns) {
     }
 }
 
+void relu_activation(struct matrix *m_array, int rows, int columns){
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            if (m_array->array[i][j] < 0){
+                m_array->array[i][j] = 0;
+            }
+        }
+    }
+}
 
 int main() {
     float m_inputs[I_ROWS][I_COLS] = {
@@ -145,8 +154,11 @@ int main() {
 
     calculate_layer_output(&result_m, &input_m, &weight_m, &bias_m);
     printf("Result matrix after applying weights and bias:\n");
+    result_m.array[0][0] = -1.25;
     print_matrix(&result_m);
-
+    relu_activation(&result_m, I_ROWS, W_ROWS);
+    printf("\n After RELU \n");
+    print_matrix(&result_m);
     // Free allocated memory
     free_matrix(&input_m);
     free_matrix(&weight_m);
