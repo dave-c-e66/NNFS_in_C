@@ -110,6 +110,20 @@ void relu_activation(struct matrix *m_array, int rows, int columns){
     }
 }
 
+void softmax_activation(struct matrix *m_array, int rows, int columns) {
+    for (int i = 0; i < rows; i++) {
+        float sum_exp = 0.0;
+        for (int j = 0; j < columns; j++) {
+            m_array->array[i][j] = exp(m_array->array[i][j]);
+            sum_exp += m_array->array[i][j];
+        }
+        for (int j = 0; j < columns; j++) {
+            m_array->array[i][j] /= sum_exp;
+        }
+    }
+}
+
+
 int main() {
     float m_inputs[I_ROWS][I_COLS] = {
         {1.0, 2.0, 3.0, 2.5},
@@ -148,6 +162,9 @@ int main() {
     }
 
     printf("Input matrix:\n");
+    print_matrix(&input_m);
+    softmax_activation(&input_m, I_ROWS, I_COLS);
+    printf("\n after softmax\n");
     print_matrix(&input_m);
     printf("Weight matrix:\n");
     print_matrix(&weight_m);
