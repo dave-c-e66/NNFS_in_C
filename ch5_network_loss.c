@@ -271,6 +271,28 @@ int main() {
     float loss;
     loss = calc_cat_cross_entrop_loss(&layer2_m, &label_m, batch_size);
     printf(" Loss is %f \n", loss);
+    // calculate accuracy
+    int predictions[CSV_FILE_ROWS];
+    int correct = 0;
+    for (int i=0; i < CSV_FILE_ROWS; i++){
+        int index_predicted;
+        float hi_prediction = 0.0;
+        for (int j=0; j < W_ROWS; j++){
+            if (layer2_m.array[i][j] > hi_prediction){
+                hi_prediction = layer2_m.array[i][j];
+                index_predicted = j;
+            }
+        }
+        predictions[i] = index_predicted;
+        // in y values are one-hot encoded they will need to be converted, need to add code for that.
+        if (y_array[i] == index_predicted){
+            correct += 1;
+        }
+        //printf("prediction %d  ground truth %d correct total %d \n", index_predicted, y_array[i], correct);
+    }
+    printf("correct is %d ", correct);
+    float accuracy = (float)correct / CSV_FILE_ROWS;
+    printf("Accuracy is : %f \n", accuracy );    
     // Free allocated memory
     free_matrix(&input_m);
     free_matrix(&weight_m);
